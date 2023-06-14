@@ -3,33 +3,9 @@
 # 类脑驾驶
 </div>
 
-<!-- <p align="center">
- <a href="https://opendrivelab.github.io/UniAD/">
-    <img alt="Project Page" src="https://img.shields.io/badge/Project%20Page-Open-yellowgreen.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/OpenDriveLab/UniAD/blob/master/LICENSE">
-    <img alt="License: Apache2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" target="_blank" />
-  </a>
-  <a href="https://github.com/OpenDriveLab/UniAD/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">
-    <img alt="Good first issue" src="https://img.shields.io/github/issues/OpenDriveLab/UniAD/good%20first%20issue" target="_blank" />
-  </a>
-</p> -->
-
-<h3 align="center">
-  <a href="https://opendrivelab.github.io/UniAD/">Project Page</a> |
-  <a href="https://arxiv.org/abs/2212.10156">arXiv</a> |
-  <a href="https://opendrivelab.com/">OpenDriveLab</a>
-  
-</h3>
-
-
 
 
 https://github.com/OpenDriveLab/UniAD/assets/48089846/bcf685e4-2471-450e-8b77-e028a46bd0f7
-
-
-
-
 
 
 <br><br>
@@ -37,60 +13,43 @@ https://github.com/OpenDriveLab/UniAD/assets/48089846/bcf685e4-2471-450e-8b77-e0
 ![teaser](sources/pipeline.png)
 
 ## 内容列表:
-1. [Highlights](#high)
-2. [News](#news)
-3. [Getting Started](#start)
-   - [Installation](docs/INSTALL.md)
-   - [Prepare Dataset](docs/DATA_PREP.md)
-   - [Evaluation Example](docs/TRAIN_EVAL.md#example)
-   - [GPU Requirements](docs/TRAIN_EVAL.md#gpu)
-   - [Train/Eval](docs/TRAIN_EVAL.md)
-4. [Results and Models](#models)
-5. [TODO List](#todos)
-6. [License](#license)
-7. [Citation](#citation)
+1. [亮点](#high)
+2. [开始入门](#start)
+   - [安装](docs/INSTALL.md)
+   - [准备数据](docs/DATA_PREP.md)
+   - [评估例子](docs/TRAIN_EVAL.md#example)
+   - [GPU 要求](docs/TRAIN_EVAL.md#gpu)
+   - [训练/评估](docs/TRAIN_EVAL.md)
+3. [结果和预训练模型](#models)
+4. [TODO List](#todos)
+5. [License](#license)
+6. [Citation](#citation)
 
-## Highlights <a name="high"></a>
+## 亮点 <a name="high"></a>
 
-- :oncoming_automobile: **Planning-oriented philosophy**: UniAD is a Unified Autonomous Driving algorithm framework following a planning-oriented philosophy. Instead of standalone modular design and multi-task learning, we cast a series of tasks, including perception, prediction and planning tasks hierarchically.
-- :trophy: **SOTA performance**: All tasks within UniAD achieve SOTA performance, especially prediction and planning (motion: 0.71m minADE, occ: 63.4% IoU, planning: 0.31% avg.Col)
-
-## News <a name="news"></a>
-
-- **`Paper Title Change`**: To avoid confusion with the "goal-point" navigation in Robotics, we change the title from "Goal-oriented" to "Planning-oriented" suggested by Reviewers. Thank you!
-
-- [2023/06/12] Bugfix [Ref: https://github.com/OpenDriveLab/UniAD/issues/21]: Previously, the performance of the stage1 model (track_map) could not be replicated when trained from scratch, due to mistakenly adding `loss_past_traj` and `freezing img_neck` and `BN`. By removing `loss_past_traj` and unfreezing `img_neck` and `BN` in training, the reported results could be reproduced (AMOTA: 0.393, [stage1_train_log](https://github.com/OpenDriveLab/UniAD/releases/download/v1.0/uniad_reproduce_stage1_gpu16_train.log)).
-
-- [2023/04/18] New feature: You can replace BEVFormer with other BEV Encoding methods, e.g., LSS, as long as you provide the `bev_embed` and `bev_pos` in [track_train](https://github.com/OpenDriveLab/UniAD/blob/cb4e3dc336ac9f94897ef3c7d85edba85a507726/projects/mmdet3d_plugin/uniad/detectors/uniad_track.py#L394) and [track_inference](https://github.com/OpenDriveLab/UniAD/blob/cb4e3dc336ac9f94897ef3c7d85edba85a507726/projects/mmdet3d_plugin/uniad/detectors/uniad_track.py#L661). Make sure your bevs and ours are of the same shape.
-- [2023/04/18] Base-model checkpoints are released.
+- :oncoming_automobile: **类脑解剖对齐理念**: 类脑驾驶是一个遵循类脑解剖对齐理念的统一自动驾驶算法框架。 不是独立的模块化设计和多任务学习，而是分层次地投放一系列任务，包括感知、预测和规划任务。
 
 
-- [2023/03/29] Code & model initial release `v1.0`
-- [2023/03/21] :rocket::rocket: UniAD is accepted by CVPR 2023, as an **Award Candidate** (12 out of 2360 accepted papers)!
-- [2022/12/21] UniAD [paper](https://arxiv.org/abs/2212.10156) is available on arXiv.
+## 开始入门 <a name="start"></a>
+- [安装](docs/INSTALL.md)
+- [准备数据](docs/DATA_PREP.md)
+- [评估例子](docs/TRAIN_EVAL.md#example)
+- [GPU 要求](docs/TRAIN_EVAL.md#gpu)
+- [训练/评估](docs/TRAIN_EVAL.md)
 
+## 结果和预训练模型 <a name="models"></a>
+UniAD 分两个阶段进行训练。 将发布两个阶段的预训练检查点，每个模型的结果如下表所示。
 
+### 阶段一: 感知训练
+> 我们首先训练感知模块（即跟踪和地图）以获得下一阶段的稳定权重初始化。 BEV 特征聚合为 5 帧 (queue_length = 5).
 
-## Getting Started <a name="start"></a>
-- [Installation](docs/INSTALL.md)
-- [Prepare Dataset](docs/DATA_PREP.md)
-- [Evaluation Example](docs/TRAIN_EVAL.md#example)
-- [GPU Requirements](docs/TRAIN_EVAL.md#gpu)
-- [Train/Eval](docs/TRAIN_EVAL.md)
-
-## Results and Pre-trained Models <a name="models"></a>
-UniAD is trained in two stages. Pretrained checkpoints of both stages will be released and the results of each model are listed in the following tables.
-
-### Stage1: Perception training
-> We first train the perception modules (i.e., track and map) to obtain a stable weight initlization for the next stage. BEV features are aggregated with 5 frames (queue_length = 5).
-
-| Method | Encoder | Tracking<br>AMOTA | Mapping<br>IoU-lane | config | Download |
-| :---: | :---: | :---: | :---: | :---:|:---:| 
+|   方法    | 编码器  | Tracking<br>AMOTA | Mapping<br>IoU-lane | config |                                                  下载                                                  |
+|:-------:|:----:| :---: | :---: | :---:|:----------------------------------------------------------------------------------------------------:| 
 | UniAD-B | R101 | 0.390 | 0.297 |  [base-stage1](projects/configs/stage1_track_map/base_track_map.py) | [base-stage1](https://github.com/OpenDriveLab/UniAD/releases/download/v1.0/uniad_base_track_map.pth) |
 
 
 
-### Stage2: End-to-end training
+### 阶段二: 端到端训练
 > We optimize all task modules together, including track, map, motion, occupancy and planning. BEV features are aggregated with 3 frames (queue_length = 3).
 
 <!-- 
@@ -140,7 +99,9 @@ All assets and code are under the [Apache 2.0 license](./LICENSE) unless specifi
 ## 相关资源
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+- [UniAD](https://github.com/OpenDriveLab/UniAD)
 - [BEVFormer](https://github.com/fundamentalvision/BEVFormer)
 - [ST-P3](https://github.com/OpenPerceptionX/ST-P3) 
 - [FIERY](https://github.com/wayveai/fiery)
 - [MOTR](https://github.com/megvii-research/MOTR)
+
