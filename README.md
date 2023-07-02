@@ -50,7 +50,7 @@ UniAD 分两个阶段进行训练。 将发布两个阶段的预训练检查点�
 
 
 ### 阶段二: 端到端训练
-> We optimize all task modules together, including track, map, motion, occupancy and planning. BEV features are aggregated with 3 frames (queue_length = 3).
+> 我们一起优化包括跟踪、建图、运动、occupancy、规划的所有任务。BEV features are aggregated with 3 frames (queue_length = 3).
 
 <!-- 
 Pre-trained models and results under main metrics are provided below. We refer you to the [paper](https://arxiv.org/abs/2212.10156) for more details. -->
