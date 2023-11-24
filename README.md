@@ -23,7 +23,7 @@ https://github.com/OpenDriveLab/UniAD/assets/48089846/bcf685e4-2471-450e-8b77-e0
 3. [结果和预训练模型](#models)
 4. [TODO List](#todos)
 5. [License](#license)
-6. [Citation](#citation)
+6. [引用](#citation)
 
 ## 亮点 <a name="high"></a>
 
@@ -104,4 +104,7 @@ All assets and code are under the [Apache 2.0 license](./LICENSE) unless specifi
 - [ST-P3](https://github.com/OpenPerceptionX/ST-P3) 
 - [FIERY](https://github.com/wayveai/fiery)
 - [MOTR](https://github.com/megvii-research/MOTR)
+- [辅助驾驶各个子任务的EEG和行为数据](https://openneuro.org/datasets/ds004657/versions/1.0.3) 
+- [模拟环境中执行驾驶任务疲劳](https://openneuro.org/datasets/ds004120/versions/1.0.0) 、[校准驾驶](https://openneuro.org/datasets/ds004118/versions/1.0.1) 
+- [基于 Carla 的专家指导强化学习](https://www.trace.ethz.ch/publications/2021/roach/index.html)
 
